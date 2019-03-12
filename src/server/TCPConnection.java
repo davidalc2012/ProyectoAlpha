@@ -34,14 +34,17 @@ public class TCPConnection extends Thread {
 
     @Override
     public void run(){
-        try {			                 // an echo server
-            String data = in.readUTF();	  
-            if(data.equals("registro")){
-                System.out.println("Nuevo cliente en el puerto: " + clientSocket.getPort());
-                out.writeUTF(data);
-            }else{
-            System.out.println("Message received from: " + clientSocket.getRemoteSocketAddress());
-            out.writeUTF(data);
+        try {
+            while(true){
+                System.out.println("Waiting for messages from: " + clientSocket.getPort());
+                String data = in.readUTF();	  
+                if(data.equals("registro")){
+                    System.out.println("Nuevo cliente en el puerto: " + clientSocket.getPort());
+                    out.writeUTF("registrado");
+                }else{
+                    System.out.println("Message: " + data + " received from: " + clientSocket.getRemoteSocketAddress());
+                //out.writeUTF(data);
+                }
             }
 
         } 

@@ -17,6 +17,8 @@ import interfaces.GameInfo;
 public class GameInfoServer implements GameInfo{
     public static String ipServerTCP="localhost";
     public static String ipServerMulticast="228.5.6.7";
+    public static int portServerTCP=7896;
+    public static int portServerMulticast=6789;
     
     public GameInfoServer() throws RemoteException{
         super();
@@ -24,6 +26,6 @@ public class GameInfoServer implements GameInfo{
     
     @Override
     public GameData getInfo( ) throws RemoteException {
-        return new GameData(ipServerTCP, ipServerMulticast, 4000, 7896);
+        return new GameData(ipServerTCP, ipServerMulticast, portServerTCP, portServerMulticast);
     }
 }

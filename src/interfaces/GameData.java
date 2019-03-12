@@ -23,7 +23,7 @@ public class GameData implements Serializable{
     private int portMulticast;
     private int portTCP;
     
-    public GameData(String ipTCP, String ipMulticast, int portMulticast, int portTCP) {
+    public GameData(String ipTCP, String ipMulticast, int portTCP, int portMulticast) {
         try {
             this.ipTCP = InetAddress.getByName(ipTCP);
             this.ipMulticast = InetAddress.getByName(ipMulticast);

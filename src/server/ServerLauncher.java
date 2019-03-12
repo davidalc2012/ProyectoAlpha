@@ -15,14 +15,15 @@ import java.net.Socket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.concurrent.TimeUnit;
 
 public class ServerLauncher {
     
     public static void main(String[] args) {
         
         //set policy for the RMI Service
-       // String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
-         String path = "file:/Users/CVASQUEZP/ProyectoAlpha/src/client/client.policy";
+        String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
+        //String path = "file:/Users/CVASQUEZP/ProyectoAlpha/src/client/client.policy";
         System.setProperty("java.security.policy",path);
 
         if (System.getSecurityManager() == null) {
@@ -46,10 +47,14 @@ public class ServerLauncher {
             TCPThread tcpThread = new TCPThread();
             tcpThread.start();
            
-            //multicast Thread 
-        /*    MulticastThread multThread = new MulticastThread();
-            multThread.start();
-*/
+            MulticastConnection multicast = new MulticastConnection();
+        
+            for (int i = 0; i<6;i++){
+                TimeUnit.SECONDS.sleep(10);
+                multicast.sendMonster();
+            }
+
+            
             
         } catch (Exception e) {
             System.err.println("ComputeEngine exception:");

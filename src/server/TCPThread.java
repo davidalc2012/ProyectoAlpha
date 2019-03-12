@@ -27,7 +27,7 @@ public class TCPThread extends Thread {
     public void run(){
         while(true) {
             try {
-                System.out.println("Waiting for messages...");
+                System.out.println("Waiting for players...");
                 Socket clientSocket = listenSocket.accept(); 
                 TCPConnection tcpConnection = new TCPConnection(clientSocket);
                 tcpConnection.start();

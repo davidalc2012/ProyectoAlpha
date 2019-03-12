@@ -21,15 +21,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GUI extends JFrame implements ItemListener{
+    private JFrame frame;
+    private JCheckBox[] checkBoxes;
+    private Socket sTCP;
     
-    public GUI (){
-        JFrame frame = new JFrame("Pégale al monstruo!!!");
+    public GUI (Socket sTCP){
+        this.sTCP = sTCP;
+        frame = new JFrame("Pégale al monstruo!!!");
         frame.setLayout(new GridLayout(3,3));
-        JCheckBox[] checkBoxes = new JCheckBox[9];
+        checkBoxes = new JCheckBox[9];
         for (int i = 0; i<9; i++){
             checkBoxes[i] = new JCheckBox("hoyo " + i);
+            checkBoxes[i].setName(Integer.toString(i));
             frame.add(checkBoxes[i]);
             checkBoxes[i].addItemListener(this);
         }
@@ -39,6 +49,31 @@ public class GUI extends JFrame implements ItemListener{
     }
     
     public void itemStateChanged(ItemEvent e){
-        System.out.println(((JCheckBox) e.getItem()).getText());
+        try {
+            String name = ((JCheckBox) e.getItem()).getName();
+            DataOutputStream out = new DataOutputStream(sTCP.getOutputStream());
+            out.writeUTF(name);
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }
+    
+    public void disableAll(){
+        for (int i = 0; i<9; i++){
+            checkBoxes[i].setEnabled(false);
+        }
+    }
+    
+    public void enableAll(){
+        for (int i = 0; i<9; i++){
+            checkBoxes[i].setEnabled(true);
+        }
+    }
+
+        
 }
