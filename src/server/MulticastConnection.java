@@ -16,6 +16,10 @@ import java.net.SocketException;
  *
  * @author agnar
  */
+
+
+/* EL PROBLEMA QUE TIENE ESTA CLASE ES QUE NO FUNCIONA SI DIVIDES EL CÓDIGO DE LA CONEXIÓN MULTICAST
+ENTONCES SI TODO LO PONES DENTRO DE LA FUNCIÓN sendMonster LA CONEXIÓN SI FUNCIONA*/
 public class MulticastConnection{
     private static int multicastPort = 6789; 
     private static String ipMulticast = "228.5.6.7";
@@ -54,7 +58,7 @@ public class MulticastConnection{
             DatagramPacket messageOut = new DatagramPacket(m, m.length, group, multicastPort);
             s.send(messageOut);
 
-           // s.leaveGroup(group);
+            s.leaveGroup(group);
             
         }
          catch (SocketException e){
