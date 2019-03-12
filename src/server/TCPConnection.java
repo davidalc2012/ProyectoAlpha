@@ -35,24 +35,27 @@ public class TCPConnection extends Thread {
     @Override
     public void run(){
         try {			                 // an echo server
-            String data = in.readUTF();	     
+            String data = in.readUTF();	  
+            if(data.equals("registro")){
+                System.out.println("Nuevo cliente en el puerto: " + clientSocket.getPort());
+                out.writeUTF(data);
+            }else{
             System.out.println("Message received from: " + clientSocket.getRemoteSocketAddress());
             out.writeUTF(data);
-           
-        
-        
+            }
+
         } 
         catch(EOFException e) {
             System.out.println("EOF:"+e.getMessage());
         } 
         catch(IOException e) {
             System.out.println("IO:"+e.getMessage());
-        } finally {
+        } /*finally {
             try {
-                clientSocket.close();
+               clientSocket.close();
             } catch (IOException e){
                 System.out.println(e);
             }
-        }
+        }*/
     }
 }
