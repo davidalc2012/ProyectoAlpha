@@ -69,9 +69,9 @@ public class ClientThread extends Thread{
             if (data.equals("registrado")){
                 System.out.println("Received: " + data) ;
                 //Multicast 
-                multiThread = new MulticastThread(gameData.getPortMulticast(), gameData.getIpMulticast());
-                multiThread.start();
                 GUI gui = new GUI(sTCP); 
+                multiThread = new MulticastThread(gameData.getPortMulticast(), gameData.getIpMulticast(), gui);
+                multiThread.start();
             }
 
             

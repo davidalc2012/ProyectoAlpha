@@ -11,6 +11,7 @@ package client;
  */
 
 
+import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -38,8 +39,8 @@ public class GUI extends JFrame implements ItemListener{
         frame.setLayout(new GridLayout(3,3));
         checkBoxes = new JCheckBox[9];
         for (int i = 0; i<9; i++){
-            checkBoxes[i] = new JCheckBox("hoyo " + i);
-            checkBoxes[i].setName(Integer.toString(i));
+            checkBoxes[i] = new JCheckBox("hoyo " + (i+1));
+            checkBoxes[i].setName(Integer.toString(i+1));
             frame.add(checkBoxes[i]);
             checkBoxes[i].addItemListener(this);
         }
@@ -50,7 +51,7 @@ public class GUI extends JFrame implements ItemListener{
     
     public void itemStateChanged(ItemEvent e){
         try {
-            String name = ((JCheckBox) e.getItem()).getName();
+            String name =  Integer.toString(Integer.valueOf(((JCheckBox) e.getItem()).getName()) + 1)   ;
             DataOutputStream out = new DataOutputStream(sTCP.getOutputStream());
             out.writeUTF(name);
             
@@ -75,5 +76,11 @@ public class GUI extends JFrame implements ItemListener{
         }
     }
 
-        
+    public void markOne(int number){
+        for (int i = 0; i<9; i++){
+                checkBoxes[i].setForeground(Color.black);
+        } 
+        checkBoxes[number].setForeground(Color.red);
+    } 
+    
 }

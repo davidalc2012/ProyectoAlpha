@@ -5,12 +5,17 @@
  */
 package server;
 
+import interfaces.GameControl;
+import interfaces.Player;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,10 +26,12 @@ public class TCPConnection extends Thread {
     DataInputStream in;
     DataOutputStream out;
     Socket clientSocket;
-
-    public TCPConnection (Socket aClientSocket) {
+    GameControl gameControl;
+    
+    public TCPConnection (Socket aClientSocket, GameControl gameControl) {
         try {
             clientSocket = aClientSocket;
+            this.gameControl = gameControl;
             in = new DataInputStream(clientSocket.getInputStream());
             out =new DataOutputStream(clientSocket.getOutputStream());
             
@@ -41,8 +48,12 @@ public class TCPConnection extends Thread {
                 if(data.equals("registro")){
                     System.out.println("Nuevo cliente en el puerto: " + clientSocket.getPort());
                     out.writeUTF("registrado");
+                    gameControl.add(new Player(clientSocket, 0));
                 }else{
                     System.out.println("Message: " + data + " received from: " + clientSocket.getRemoteSocketAddress());
+                    //Si data = monstruo
+                    gameControl.playerPoint(clientSocket);
+                    gameControl.start();
                 //out.writeUTF(data);
                 }
             }
@@ -53,6 +64,8 @@ public class TCPConnection extends Thread {
         } 
         catch(IOException e) {
             System.out.println("IO:"+e.getMessage());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TCPConnection.class.getName()).log(Level.SEVERE, null, ex);
         } /*finally {
             try {
                clientSocket.close();

@@ -15,6 +15,7 @@ import java.net.SocketException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import server.MulticastConnection;
 import server.TCPThread;
 
@@ -25,10 +26,12 @@ import server.TCPThread;
 public class MulticastThread extends Thread {
     private static int serverPort; 
     private InetAddress ipAddress;
+    private GUI gui;
     
-    public MulticastThread (int serverPort, InetAddress ipAddress) throws IOException{
+    public MulticastThread (int serverPort, InetAddress ipAddress, GUI gui) throws IOException{
         this.serverPort = serverPort;
         this.ipAddress = ipAddress;
+        this.gui = gui;
     }
     
     public void run(){
@@ -42,21 +45,11 @@ public class MulticastThread extends Thread {
                 DatagramPacket messageIn = new DatagramPacket(buffer, buffer.length);
 
                 listenSocket.receive(messageIn);
-
-                System.out.println("Message: " + new String(messageIn.getData()));
-
+                String data = new String(messageIn.getData());
+                System.out.println("Message: " + data);
+                gui.markOne(Integer.valueOf(data) - 1);
                 //listenSocket.leaveGroup(group);		
 
-                
-                /*
-                
-                Random x = new Random();
-                int n = 1 + x.nextInt(9);
-                System.out.println("Monstruo en la posición: " + n );
-                Socket clientSocket = listenSocket.accept(); 
-                MulticastConnection multConnection = new MulticastConnection();
-                multConnection.sendMonster();
-                */
             }
         } catch (IOException ex) {
             Logger.getLogger(TCPThread.class.getName()).log(Level.SEVERE, null, ex);

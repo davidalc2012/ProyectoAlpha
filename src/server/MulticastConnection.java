@@ -46,7 +46,7 @@ public class MulticastConnection{
         
    	try { 
             //s.joinGroup(group);
-            String myMessage=Integer.toString(new Random().nextInt(6)+1);
+            String myMessage=Integer.toString((new Random().nextInt(8))+1);
             System.out.println(myMessage);
             byte [] m = myMessage.getBytes();
             DatagramPacket messageOut = new DatagramPacket(m, m.length, group, multicastPort);

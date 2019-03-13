@@ -9,12 +9,15 @@ package server;
  *
  * @author agnar
  */
+import interfaces.GameControl;
 import interfaces.GameInfo;
+import interfaces.Player;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class ServerLauncher {
@@ -43,17 +46,18 @@ public class ServerLauncher {
             registry.rebind(name, stub);
             System.out.println("ComputeEngine bound");
             
+            
             //TCP Thread initialization
-            TCPThread tcpThread = new TCPThread();
+            GameControl gameControl = new GameControl();
+            TCPThread tcpThread = new TCPThread(gameControl);
             tcpThread.start();
-           
             MulticastConnection multicast = new MulticastConnection();
-        
-            for (int i = 0; i<6;i++){
-                TimeUnit.SECONDS.sleep(10);
-                multicast.sendMonster();
-            }
-
+            gameControl.setMulticast(multicast);
+            
+            
+            
+            
+            gameControl.start();
             
             
         } catch (Exception e) {
