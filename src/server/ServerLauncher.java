@@ -25,8 +25,8 @@ public class ServerLauncher {
     public static void main(String[] args) {
         
         //set policy for the RMI Service
-        String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
-        //String path = "file:/Users/CVASQUEZP/ProyectoAlpha/src/client/client.policy";
+        //String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
+        String path = "file:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/client.policy";
         System.setProperty("java.security.policy",path);
 
         if (System.getSecurityManager() == null) {
@@ -55,7 +55,7 @@ public class ServerLauncher {
             gameControl.setMulticast(multicast);
             
             
-            
+            TimeUnit.SECONDS.sleep(3);
             
             gameControl.start();
             

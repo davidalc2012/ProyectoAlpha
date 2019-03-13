@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GUI extends JFrame implements ItemListener{
-    private JFrame frame;
+    private JFrame frame,frame1;
     private JCheckBox[] checkBoxes;
     private Socket sTCP;
     
@@ -82,5 +82,11 @@ public class GUI extends JFrame implements ItemListener{
         } 
         checkBoxes[number].setForeground(Color.red);
     } 
+    public void ganar(boolean fin){
+        if(!fin){
+        JFrame win = new JFrame("Fin Juego");
+        win.setVisible(true);
+        }
+    }
     
 }

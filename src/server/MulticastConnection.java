@@ -42,11 +42,12 @@ public class MulticastConnection{
         }   
     }
     
-    public String sendMonster(){
+    public String sendMonster(int random){
         
    	try { 
             //s.joinGroup(group);
-            String myMessage=Integer.toString((new Random().nextInt(8))+1);
+           // String myMessage=Integer.toString((new Random().nextInt(8))+1);
+            String myMessage = Integer.toString(random);
             System.out.println(myMessage);
             byte [] m = myMessage.getBytes();
             DatagramPacket messageOut = new DatagramPacket(m, m.length, group, multicastPort);

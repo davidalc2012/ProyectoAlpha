@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/interfaces/GameData.java</file>
+            <file>file:/C:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/interfaces/GameControl.java</file>
+            <file>file:/C:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/server/GameInfoServer.java</file>
+            <file>file:/C:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/server/TCPThread.java</file>
+            <file>file:/C:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/MulticastThread.java</file>
+            <file>file:/C:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/ClientThread.java</file>
+            <file>file:/C:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/interfaces/Player.java</file>
+        </group>
+    </open-files>
+</project-private>

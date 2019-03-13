@@ -7,6 +7,7 @@ package interfaces;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import server.MulticastConnection;
 
@@ -20,12 +21,16 @@ public class GameControl {
     private int count;
     private boolean started; 
     private static int ROUNDS = 10;
+    private String monstActual;
+    private int random;
     
     public GameControl(){
         playersArray = new ArrayList<Player>();
         count = 0;
         started = true;
+        
     }
+
     
     public void add(Player player){
         System.out.println(player);
@@ -35,18 +40,26 @@ public class GameControl {
 
     @Override
     public String toString() {
-        return "GameControl{" + "playersArray=" + playersArray + '}';
+        return "GameControl" + "playersArray=" + playersArray + '}';
     }
-    
+    public int random(){
+        Random x = new Random();
+        random = 1 + x.nextInt(8);
+        return random;
+    }
     public void sendMonster() throws InterruptedException{
         //TimeUnit.SECONDS.sleep(10);
         //    for (int i = 0; i<10;i++){
         //TimeUnit.SECONDS.sleep(4);
-        
-        multicast.sendMonster();
+        monstActual= multicast.sendMonster(random());
         count++;
         //    }
     }
+
+    public String getMonstActual() {
+        return monstActual;
+    }
+    
     
     public void setMulticast(MulticastConnection multicast){
         this.multicast = multicast;
@@ -59,13 +72,14 @@ public class GameControl {
             }
             else {
                 started = false;
+      
             }
         }
-        else {
+        /*else {
             count=0;
             started = true;
             //
-        }
+        }*/
         
     }
     

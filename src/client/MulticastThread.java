@@ -47,7 +47,7 @@ public class MulticastThread extends Thread {
                 listenSocket.receive(messageIn);
                 String data = new String(messageIn.getData());
                 System.out.println("Message: " + data);
-                gui.markOne(Integer.valueOf(data) - 1);
+                gui.markOne(Integer.valueOf(data));
                 //listenSocket.leaveGroup(group);		
 
             }
