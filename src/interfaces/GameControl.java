@@ -42,6 +42,7 @@ public class GameControl {
         //TimeUnit.SECONDS.sleep(10);
         //    for (int i = 0; i<10;i++){
         //TimeUnit.SECONDS.sleep(4);
+        
         multicast.sendMonster();
         count++;
         //    }
