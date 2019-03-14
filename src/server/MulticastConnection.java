@@ -57,10 +57,10 @@ public class MulticastConnection{
         DatagramPacket messageOut = new DatagramPacket(m, m.length, group, multicastPort);
         s.send(messageOut);
         
-        TimeUnit.SECONDS.sleep(10);
-        System.out.println("REINICIANDO");
-        game.setStarted(true);
-        game.start();
+        //TimeUnit.SECONDS.sleep(10);
+        //System.out.println("REINICIANDO");
+        //game.setStarted(true);
+        //game.start();
     }
     
     public void sendMonster(int random){

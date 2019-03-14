@@ -37,9 +37,10 @@ public class ClientLauncher {
         String ipServer = "localhost";
 
         //RMI Service localization
-        String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/client/client.policy";
+        //String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/client/client.policy";
         //String path = "file:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/client.policy";
-
+        String path = "C:/Users/sdist.ITAM/Documents/proyectoAlpha/ProyectoAlpha/src/client/client.policy";
+        
         ClientThread cliente1 = new ClientThread(path, ipServer);
         cliente1.start();
         

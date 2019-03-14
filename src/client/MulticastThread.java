@@ -13,6 +13,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -27,11 +28,13 @@ public class MulticastThread extends Thread {
     private static int serverPort; 
     private InetAddress ipAddress;
     private GUI gui;
+    private ClientThread clientThread;
     
-    public MulticastThread (int serverPort, InetAddress ipAddress, GUI gui) throws IOException{
+    public MulticastThread (int serverPort, InetAddress ipAddress, GUI gui, ClientThread sTCP) throws IOException{
         this.serverPort = serverPort;
         this.ipAddress = ipAddress;
         this.gui = gui;
+        this.clientThread = clientThread;
     }
     
     public void run(){
@@ -49,6 +52,8 @@ public class MulticastThread extends Thread {
                 System.out.println("Message: " + data);
                 if(data.charAt(0)=='*'){
                     gui.win(data);
+                    TimeUnit.SECONDS.sleep(2);
+                    clientThread.register();
                 }
                 else {
                     String number = String.valueOf(data.charAt(0));
@@ -59,6 +64,8 @@ public class MulticastThread extends Thread {
             }
         } catch (IOException ex) {
             Logger.getLogger(TCPThread.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MulticastThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

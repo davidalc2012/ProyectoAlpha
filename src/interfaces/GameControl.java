@@ -31,7 +31,6 @@ public class GameControl {
         
     }
 
-    
     public void add(Player player){
         System.out.println(player);
         playersArray.add(player);
@@ -42,10 +41,12 @@ public class GameControl {
     public String toString() {
         return "GameControl" + "playersArray=" + playersArray + '}';
     }
+    
     public int random(){
         this.monstActual = 1 + new Random().nextInt(9);
         return this.monstActual;
     }
+    
     public void sendMonster() throws InterruptedException{
         //TimeUnit.SECONDS.sleep(10);
         //    for (int i = 0; i<10;i++){
@@ -66,10 +67,12 @@ public class GameControl {
         this.multicast = multicast;
     }
     
-    public void start() throws InterruptedException, IOException{
+    public boolean start() throws InterruptedException, IOException{
         if (started){
             if(count<ROUNDS){
                 sendMonster();
+                //started=false;
+                return true;
             }
             else {
                 int max = 0;
@@ -94,15 +97,13 @@ public class GameControl {
                 count=0;
                 this.setZeros();
                 started = false;
-                
+                return false;
             }
         }
-        /*else {
-            count=0;
-            started = true;
-            //
-        }*/
-        
+        //else {
+            
+        //}
+        return true;
     }
     
     public void setZeros(){

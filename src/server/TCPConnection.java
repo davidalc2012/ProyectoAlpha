@@ -58,10 +58,9 @@ public class TCPConnection extends Thread {
                     System.out.println("Monstruo actual: " + gameControl.getMonstActual());
                     System.out.println("Respuesta Recibida " +  data);
                     if(data.equals(String.valueOf(gameControl.getMonstActual()))){ //nunca es igual al monstruo es por eso que no entra :(
-                        System.out.println("Entro!!!!!!!!!!!!!");
                         gameControl.playerPoint(clientSocket);
                     }
-                    gameControl.start();
+                    gameControl.setStarted(true);
                 //out.writeUTF(data);
                 }
             }
@@ -69,12 +68,30 @@ public class TCPConnection extends Thread {
         } 
         catch(EOFException e) {
             System.out.println("EOF:"+e.getMessage());
-        } 
-        catch(IOException e) {
+        }catch(IOException e) {
             System.out.println("IO:"+e.getMessage());
-        } catch (InterruptedException ex) {
-            Logger.getLogger(TCPConnection.class.getName()).log(Level.SEVERE, null, ex);
-        } /*finally {
+        }
+        /*finally {
+        try {
+        clientSocket.close();
+        } catch (IOException e){
+        System.out.println(e);
+        }
+        }*/
+        /*finally {
+        try {
+        clientSocket.close();
+        } catch (IOException e){
+        System.out.println(e);
+        }
+        }*/ 
+        /*finally {
+        try {
+        clientSocket.close();
+        } catch (IOException e){
+        System.out.println(e);
+        }
+        }*/  /*finally {
             try {
                clientSocket.close();
             } catch (IOException e){

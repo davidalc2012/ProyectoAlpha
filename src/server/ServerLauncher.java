@@ -26,8 +26,10 @@ public class ServerLauncher {
     public static void main(String[] args) {
         
         //set policy for the RMI Service
-        String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
+        //String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
         //String path = "file:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/client.policy";
+        String path = "C:/Users/sdist.ITAM/Documents/proyectoAlpha/ProyectoAlpha/src/server/server.policy";
+        
         System.setProperty("java.security.policy",path);
 
         if (System.getSecurityManager() == null) {
@@ -54,23 +56,50 @@ public class ServerLauncher {
             tcpThread.start();
             MulticastConnection multicast = new MulticastConnection();
             gameControl.setMulticast(multicast);
-            
-            
+
             TimeUnit.SECONDS.sleep(10);
             System.out.println("Start? (y)");
             Scanner sc = new Scanner(System.in);
             String i = sc.nextLine();
             
+            
+            
             if (i.equals("y")){
-                gameControl.start();
+                //gameControl.start();
+                boolean flag = true;
+                while(flag){
+                    flag = gameControl.start();
+                    if(!flag){
+                        gameControl = new GameControl();
+                        gameControl.setMulticast(multicast);
+                        flag = true;
+                        TimeUnit.SECONDS.sleep(10);
+                        System.out.println("REINICIANDO!!!!!");
+                    }      
+                }
             }
+            
+            /*
+            boolean flag = true;
+            while(flag){
+                flag = gameControl.start();
+                if(!flag){
+                    gameControl = new GameControl();
+                    gameControl.setMulticast(multicast);
+                    flag = true;
+                    TimeUnit.SECONDS.sleep(10);
+                    System.out.println("REINICIANDO!!!!!");
+                }      
+            }
+            */
             
         } catch (Exception e) {
             System.err.println("ComputeEngine exception:");
             e.printStackTrace();
-        }
-        
-      
-        
-    }        
+        }   
+    }     
+    
+    public boolean cycle(){
+        return true;
+    }
 }

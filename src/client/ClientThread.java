@@ -27,12 +27,13 @@ import java.util.logging.Logger;
 public class ClientThread extends Thread{
     private String pathPolicy;
     private String ipRMI;
-    
+    private Socket sTCP;
     
     
     public ClientThread (String pathPolicy, String ipRMI){
         this.pathPolicy = pathPolicy;
         this.ipRMI = ipRMI;
+        Socket sTCP = null;
     }
     
     public void run(){
@@ -50,7 +51,7 @@ public class ClientThread extends Thread{
 
             //TCP Socket for the monster hit send - Debe pasarse a una función de la GUI!
             //Registro cliente nuevo
-            Socket sTCP = null;
+            //Socket sTCP = null;
             int serverTCPPort = gameData.getPortTCP();
             InetAddress serverTCPIp = gameData.getIpTCP();
             sTCP = new Socket(serverTCPIp, serverTCPPort);
@@ -66,25 +67,13 @@ public class ClientThread extends Thread{
                 System.out.println("Received: " + data) ;
                 //Multicast 
                 GUI gui = new GUI(sTCP); 
-                multiThread = new MulticastThread(gameData.getPortMulticast(), gameData.getIpMulticast(), gui);
+                multiThread = new MulticastThread(gameData.getPortMulticast(), gameData.getIpMulticast(), gui, this);
                 multiThread.start();
             }
 
-            
-            
-            
-            
-            
-            
-            
             //La conexión debe permanecer abierta!
             //sTCP.close();
-            
-            
-            
-            
-            
-            
+
         } catch (RemoteException ex) {
             Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
@@ -92,5 +81,10 @@ public class ClientThread extends Thread{
         } catch (IOException ex) {
             Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void register() throws IOException{
+        DataOutputStream out = new DataOutputStream(sTCP.getOutputStream());
+        out.writeUTF("registro");
     }
 }
