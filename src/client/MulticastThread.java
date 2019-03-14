@@ -40,14 +40,20 @@ public class MulticastThread extends Thread {
             listenSocket.joinGroup(ipAddress); 
 
             while(true) {
-	    	byte[] buffer = new byte[1];
+	    	byte[] buffer = new byte[20];
                 System.out.println("Waiting for messages MULTICAST");
                 DatagramPacket messageIn = new DatagramPacket(buffer, buffer.length);
 
                 listenSocket.receive(messageIn);
                 String data = new String(messageIn.getData());
                 System.out.println("Message: " + data);
-                gui.markOne(Integer.valueOf(data));
+                if(data.charAt(0)=='*'){
+                    gui.win(data);
+                }
+                else {
+                    String number = String.valueOf(data.charAt(0));
+                    gui.markOne(Integer.valueOf(number));
+                }
                 //listenSocket.leaveGroup(group);		
 
             }

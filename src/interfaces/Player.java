@@ -25,6 +25,10 @@ public class Player {
         this.socket = socket;
     }
 
+    public Player() {
+
+    }
+        
     public int getScore() {
         return score;
     }

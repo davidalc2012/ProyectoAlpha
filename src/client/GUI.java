@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class GUI extends JFrame implements ItemListener{
     private JFrame frame,frame1;
@@ -35,7 +36,7 @@ public class GUI extends JFrame implements ItemListener{
     
     public GUI (Socket sTCP){
         this.sTCP = sTCP;
-        frame = new JFrame("Pégale al monstruo!!!");
+        frame = new JFrame("Número de Jugador: " + sTCP.getPort());
         frame.setLayout(new GridLayout(3,3));
         checkBoxes = new JCheckBox[9];
         for (int i = 0; i<9; i++){
@@ -51,16 +52,15 @@ public class GUI extends JFrame implements ItemListener{
     
     public void itemStateChanged(ItemEvent e){
         try {
-            String name =  Integer.toString(Integer.valueOf(((JCheckBox) e.getItem()).getName()) + 1)   ;
-            DataOutputStream out = new DataOutputStream(sTCP.getOutputStream());
-            out.writeUTF(name);
-            
-            
+            if(((JCheckBox)e.getItem()).isSelected()){
+                String name =  ((JCheckBox) e.getItem()).getName()   ;
+                DataOutputStream out = new DataOutputStream(sTCP.getOutputStream());
+                out.writeUTF(name);
+                this.disableAll();
+            }
         } catch (IOException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
         
     }
     
@@ -73,20 +73,22 @@ public class GUI extends JFrame implements ItemListener{
     public void enableAll(){
         for (int i = 0; i<9; i++){
             checkBoxes[i].setEnabled(true);
+            checkBoxes[i].setSelected(false);
         }
     }
 
     public void markOne(int number){
+        this.enableAll();
         for (int i = 0; i<9; i++){
                 checkBoxes[i].setForeground(Color.black);
         } 
-        checkBoxes[number].setForeground(Color.red);
+        checkBoxes[number-1].setForeground(Color.red);
+
     } 
-    public void ganar(boolean fin){
-        if(!fin){
-        JFrame win = new JFrame("Fin Juego");
-        win.setVisible(true);
-        }
+    
+    public void win(String message){
+        this.disableAll();
+        JOptionPane.showMessageDialog(null, message);
     }
     
 }

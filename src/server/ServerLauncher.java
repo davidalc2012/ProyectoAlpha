@@ -18,6 +18,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ServerLauncher {
@@ -25,8 +26,8 @@ public class ServerLauncher {
     public static void main(String[] args) {
         
         //set policy for the RMI Service
-        //String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
-        String path = "file:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/client.policy";
+        String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
+        //String path = "file:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/client.policy";
         System.setProperty("java.security.policy",path);
 
         if (System.getSecurityManager() == null) {
@@ -55,10 +56,14 @@ public class ServerLauncher {
             gameControl.setMulticast(multicast);
             
             
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(10);
+            System.out.println("Start? (y)");
+            Scanner sc = new Scanner(System.in);
+            String i = sc.nextLine();
             
-            gameControl.start();
-            
+            if (i.equals("y")){
+                gameControl.start();
+            }
             
         } catch (Exception e) {
             System.err.println("ComputeEngine exception:");

@@ -48,10 +48,6 @@ public class ClientThread extends Thread{
             GameInfo game = (GameInfo) registry.lookup(name);
             GameData gameData = game.getInfo();
 
-
-            
-            
-
             //TCP Socket for the monster hit send - Debe pasarse a una función de la GUI!
             //Registro cliente nuevo
             Socket sTCP = null;

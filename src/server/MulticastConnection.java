@@ -5,12 +5,14 @@
  */
 package server;
 
+import interfaces.GameControl;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -42,19 +44,37 @@ public class MulticastConnection{
         }   
     }
     
-    public String sendMonster(int random){
+    public void sendEnd(String winner, GameControl game) throws IOException, InterruptedException{
+        String myMessage = "";
+        if (winner.equals("EMPATE")){
+            myMessage = "*EMPATE*";
+        } 
+        else{
+            System.out.println("WINNER: " + winner);
+            myMessage = "*"+winner+"*";
+        }
+        byte [] m = myMessage.getBytes();
+        DatagramPacket messageOut = new DatagramPacket(m, m.length, group, multicastPort);
+        s.send(messageOut);
+        
+        TimeUnit.SECONDS.sleep(10);
+        System.out.println("REINICIANDO");
+        game.setStarted(true);
+        game.start();
+    }
+    
+    public void sendMonster(int random){
         
    	try { 
             //s.joinGroup(group);
            // String myMessage=Integer.toString((new Random().nextInt(8))+1);
             String myMessage = Integer.toString(random);
-            System.out.println(myMessage);
+            System.out.println("Monstruo a enviar: " + myMessage);
             byte [] m = myMessage.getBytes();
             DatagramPacket messageOut = new DatagramPacket(m, m.length, group, multicastPort);
             s.send(messageOut);
              
             //s.leaveGroup(group);
-            return myMessage;
         }
          catch (SocketException e){
              System.out.println("Socket: " + e.getMessage());
@@ -65,8 +85,7 @@ public class MulticastConnection{
 	 finally {
             //if(s != null) s.close();
         }
-        
-        return "";
+       
         
     }
 }

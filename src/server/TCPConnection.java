@@ -55,12 +55,12 @@ public class TCPConnection extends Thread {
                     System.out.println("Message: " + data + " received from: " + clientSocket.getRemoteSocketAddress());
                  
                     //Si data = monstruo
-                    System.out.println("hola " + gameControl.getMonstActual()); //prueba para ver por qué nunca entra al if
-                    if(data.equals(gameControl.getMonstActual())){ //nunca es igual al monstruo es por eso que no entra :(
-                        System.out.println("hOLA"); //prueba
-                        player.point(); //aumenta el score del jugador
+                    System.out.println("Monstruo actual: " + gameControl.getMonstActual());
+                    System.out.println("Respuesta Recibida " +  data);
+                    if(data.equals(String.valueOf(gameControl.getMonstActual()))){ //nunca es igual al monstruo es por eso que no entra :(
+                        System.out.println("Entro!!!!!!!!!!!!!");
+                        gameControl.playerPoint(clientSocket);
                     }
-                    gameControl.playerPoint(clientSocket);
                     gameControl.start();
                 //out.writeUTF(data);
                 }
