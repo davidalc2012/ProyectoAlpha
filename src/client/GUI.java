@@ -36,7 +36,7 @@ public class GUI extends JFrame implements ItemListener{
     
     public GUI (Socket sTCP){
         this.sTCP = sTCP;
-        frame = new JFrame("Número de Jugador: " + sTCP.getPort());
+        frame = new JFrame("Número de Jugador: " + sTCP.getLocalPort());
         frame.setLayout(new GridLayout(3,3));
         checkBoxes = new JCheckBox[9];
         for (int i = 0; i<9; i++){

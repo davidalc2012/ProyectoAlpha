@@ -20,17 +20,32 @@ public class GameControl {
     private ArrayList<Player> playersArray;
     private MulticastConnection multicast;
     private int count;
-    private boolean started; 
-    private static int ROUNDS = 10;
+    private boolean started;
+    private static int ROUNDS = 5;
     private int monstActual;
+    private boolean ended;
+    private double startTime;
     
     public GameControl(){
         playersArray = new ArrayList<Player>();
         count = 0;
         started = true;
+        ended = false;
         
     }
 
+    public boolean getEnded(){
+        return ended;
+    }
+    
+    public ArrayList<Player> getPlayersArray(){
+        return playersArray;
+    }
+     
+    public void setPlayersArray(ArrayList<Player> array){
+        this.playersArray = array;
+    }
+        
     public void add(Player player){
         System.out.println(player);
         playersArray.add(player);
@@ -71,7 +86,8 @@ public class GameControl {
         if (started){
             if(count<ROUNDS){
                 sendMonster();
-                //started=false;
+                started=false;
+                startTime = System.currentTimeMillis();
                 return true;
             }
             else {
@@ -92,18 +108,19 @@ public class GameControl {
                     multicast.sendEnd("EMPATE", this);
                 }
                 else {
-                    multicast.sendEnd(String.valueOf(winner.getSocket().getLocalPort()), this);
+                    multicast.sendEnd(String.valueOf(winner.getSocket().getPort()), this);
                 }
                 count=0;
                 this.setZeros();
                 started = false;
+                ended = true;
                 return false;
             }
         }
-        //else {
-            
-        //}
-        return true;
+        if(System.currentTimeMillis()-startTime>10000){
+            started=true;
+        }
+        return false;
     }
     
     public void setZeros(){

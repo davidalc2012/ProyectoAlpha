@@ -59,8 +59,8 @@ public class TCPConnection extends Thread {
                     System.out.println("Respuesta Recibida " +  data);
                     if(data.equals(String.valueOf(gameControl.getMonstActual()))){ //nunca es igual al monstruo es por eso que no entra :(
                         gameControl.playerPoint(clientSocket);
+                        gameControl.setStarted(true);
                     }
-                    gameControl.setStarted(true);
                 //out.writeUTF(data);
                 }
             }
@@ -71,32 +71,9 @@ public class TCPConnection extends Thread {
         }catch(IOException e) {
             System.out.println("IO:"+e.getMessage());
         }
-        /*finally {
-        try {
-        clientSocket.close();
-        } catch (IOException e){
-        System.out.println(e);
-        }
-        }*/
-        /*finally {
-        try {
-        clientSocket.close();
-        } catch (IOException e){
-        System.out.println(e);
-        }
-        }*/ 
-        /*finally {
-        try {
-        clientSocket.close();
-        } catch (IOException e){
-        System.out.println(e);
-        }
-        }*/  /*finally {
-            try {
-               clientSocket.close();
-            } catch (IOException e){
-                System.out.println(e);
-            }
-        }*/
+        
+    }
+    public void setGameControl(GameControl gameControl){
+        this.gameControl = gameControl;
     }
 }

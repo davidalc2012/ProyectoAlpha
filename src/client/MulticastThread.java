@@ -53,11 +53,12 @@ public class MulticastThread extends Thread {
                 if(data.charAt(0)=='*'){
                     gui.win(data);
                     TimeUnit.SECONDS.sleep(2);
-                    clientThread.register();
                 }
                 else {
-                    String number = String.valueOf(data.charAt(0));
-                    gui.markOne(Integer.valueOf(number));
+                    if (data.trim().length()==1){
+                        String number = String.valueOf(data.charAt(0));
+                        gui.markOne(Integer.valueOf(number));
+                    }
                 }
                 //listenSocket.leaveGroup(group);		
 

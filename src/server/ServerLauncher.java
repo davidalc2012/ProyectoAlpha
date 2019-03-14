@@ -26,9 +26,9 @@ public class ServerLauncher {
     public static void main(String[] args) {
         
         //set policy for the RMI Service
-        //String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
+        String path = "file:/Users/agnar/NetBeansProjects/ProyectoAlpha/src/server/server.policy";
         //String path = "file:/Users/CVASQUEZP/Desktop/ProyectoAlpha/src/client/client.policy";
-        String path = "C:/Users/sdist.ITAM/Documents/proyectoAlpha/ProyectoAlpha/src/server/server.policy";
+        //String path = "C:/Users/sdist.ITAM/Documents/proyectoAlpha/ProyectoAlpha/src/server/server.policy";
         
         System.setProperty("java.security.policy",path);
 
@@ -61,21 +61,26 @@ public class ServerLauncher {
             System.out.println("Start? (y)");
             Scanner sc = new Scanner(System.in);
             String i = sc.nextLine();
-            
-            
-            
+
             if (i.equals("y")){
-                //gameControl.start();
                 boolean flag = true;
-                while(flag){
-                    flag = gameControl.start();
-                    if(!flag){
+                boolean flagEnded = false;
+                while(true){
+                    flagEnded = gameControl.getEnded();          
+                    if(flagEnded){
+                        ArrayList<Player> aux = gameControl.getPlayersArray();
                         gameControl = new GameControl();
                         gameControl.setMulticast(multicast);
+                        gameControl.setPlayersArray(aux);
+                        tcpThread.setGameControl(gameControl);
                         flag = true;
                         TimeUnit.SECONDS.sleep(10);
                         System.out.println("REINICIANDO!!!!!");
                     }      
+                    else {
+                        TimeUnit.MILLISECONDS.sleep(500);
+                        gameControl.start();
+                    }
                 }
             }
             

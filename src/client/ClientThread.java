@@ -82,9 +82,4 @@ public class ClientThread extends Thread{
             Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void register() throws IOException{
-        DataOutputStream out = new DataOutputStream(sTCP.getOutputStream());
-        out.writeUTF("registro");
-    }
 }
