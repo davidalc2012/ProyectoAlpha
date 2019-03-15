@@ -16,7 +16,7 @@ import interfaces.GameInfo;
 //Implements the interface for the RMI service
 public class GameInfoServer implements GameInfo{
     public static String ipServerTCP="localhost";
-    public static String ipServerMulticast="228.5.6.7";
+    public static String ipServerMulticast="228.5.6.10";
     public static int portServerTCP=7896;
     public static int portServerMulticast=6789;
     

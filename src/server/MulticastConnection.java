@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 ENTONCES SI TODO LO PONES DENTRO DE LA FUNCIÓN sendMonster LA CONEXIÓN SI FUNCIONA*/
 public class MulticastConnection{
     private static int multicastPort = 6789; 
-    private static String ipMulticast = "228.5.6.7";
+    private static String ipMulticast = "228.5.6.10";
     InetAddress group;
     MulticastSocket s;
     

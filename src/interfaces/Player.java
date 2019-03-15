@@ -45,8 +45,9 @@ public class Player {
         this.socket = socket;
     }
     
-    public void point(){
-        score++;    
+    public int point(){
+        score++; 
+        return score;
     }
     
     @Override

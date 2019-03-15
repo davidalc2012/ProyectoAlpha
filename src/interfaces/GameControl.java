@@ -19,16 +19,21 @@ import server.MulticastConnection;
 public class GameControl {
     private ArrayList<Player> playersArray;
     private MulticastConnection multicast;
-    private int count;
+    private int playerPoints;
+    private Player playerMax;
+    //private int count;
     private boolean started;
-    private static int ROUNDS = 5;
+    private static int POINTS = 5;
+    
+    //private static int ROUNDS = 5;
     private int monstActual;
     private boolean ended;
     private double startTime;
     
     public GameControl(){
         playersArray = new ArrayList<Player>();
-        count = 0;
+        playerPoints=0;
+        //count = 0;
         started = true;
         ended = false;
         
@@ -69,7 +74,7 @@ public class GameControl {
         this.random();
         System.out.println(playersArray.toString());
         multicast.sendMonster(monstActual);
-        count++;
+        //playerPoints++;
         //    }
     }
 
@@ -83,7 +88,31 @@ public class GameControl {
     }
     
     public boolean start() throws InterruptedException, IOException{
+        
         if (started){
+            if(playerPoints<POINTS){
+                sendMonster();
+                started=false;
+                startTime = System.currentTimeMillis();
+                return true;
+            }
+            else {
+                int max = 0;
+                boolean empate = false;
+                System.out.println(playerMax.getSocket().getPort());
+                multicast.sendEnd(String.valueOf(playerMax.getSocket().getPort()), this);
+                playerPoints=0;
+                this.setZeros();
+                started = false;
+                ended = true;
+                return false;
+            }
+        }
+        
+        
+        
+        
+        /*if (started){
             if(count<ROUNDS){
                 sendMonster();
                 started=false;
@@ -117,6 +146,7 @@ public class GameControl {
                 return false;
             }
         }
+        */
         if(System.currentTimeMillis()-startTime>10000){
             started=true;
         }
@@ -130,9 +160,13 @@ public class GameControl {
     }
         
     public void playerPoint(Socket socketAddress){
-        int aux = playersArray.indexOf(new Player(socketAddress));
-        if (aux!=-1){
-            playersArray.get(aux).point();
+        int auxPlayer = playersArray.indexOf(new Player(socketAddress));
+        if (auxPlayer!=-1){
+            int auxPoints = playersArray.get(auxPlayer).point();
+            if (auxPoints>playerPoints){
+                playerPoints=auxPoints;
+                playerMax=playersArray.get(auxPlayer);
+            }
         }
     }
 
